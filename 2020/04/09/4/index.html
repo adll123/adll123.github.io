@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>N1盒子折腾记录 | L's Blog</title><meta name="author" content="LucasL"><meta name="copyright" content="LucasL"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="抱着学习linux的目的，一直想入树莓派，偶然间在某山论坛了解了N1盒子从此一发不可收拾。这次借着疫情宅家的机会终于入手，开始对某讯N1盒子折腾降级+刷入armbian系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="N1盒子折腾记录">
+<meta property="og:url" content="http://example.com/2020/04/09/4/index.html">
+<meta property="og:site_name" content="L&#39;s Blog">
+<meta property="og:description" content="抱着学习linux的目的，一直想入树莓派，偶然间在某山论坛了解了N1盒子从此一发不可收拾。这次借着疫情宅家的机会终于入手，开始对某讯N1盒子折腾降级+刷入armbian系统。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/config/img/avatar.jpg">
+<meta property="article:published_time" content="2020-04-09T00:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-09T00:00:00.000Z">
+<meta property="article:author" content="LucasL">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/config/img/avatar.jpg"><link rel="shortcut icon" href="/config/img/favicon.png"><link rel="canonical" href="http://example.com/2020/04/09/4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'N1盒子折腾记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-04-09 00:00:00'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.min.css" /><link rel="stylesheet" href="/config/css/icat.css" /><link rel="stylesheet" href="/config/css/pace.css" /><link rel="stylesheet" href="/config/css/about.css" /><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/css/main.css"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/config/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-bars"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-folder"></i><span> 导航</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 阅读</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="L's Blog"><span class="site-name">L's Blog</span></a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-bars"></i><span> 文章</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-folder"></i><span> 导航</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 阅读</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">N1盒子折腾记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-04-09T00:00:00.000Z" title="发表于 2020-04-09 00:00:00">2020-04-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-04-09T00:00:00.000Z" title="更新于 2020-04-09 00:00:00">2020-04-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="N1盒子折腾记录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>抱着学习linux的目的，一直想入树莓派，偶然间在某山论坛了解了N1盒子从此一发不可收拾。这次借着疫情宅家的机会终于入手，开始对某讯N1盒子折腾降级+刷入armbian系统。</p>
+<span id="more"></span>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>了解开发板的小伙伴应该大多知道树莓派，但是很多人表示树莓派需要折腾硬件。后来无意中在坛子里看见大佬们折腾的矿渣——某讯N1盒子，深入了解一下发现比较适合自己，可玩性很高。随后直接PDD上搞了个九成新的开耍。<br>友情提示这货由于不可描述的原因，某宝某鱼都买不到（至少我没发现），仅PDD和企鹅家的转转上面有货。自从倒爷进场后价格一路飙升，从六七十涨到了100+（心酸），想入手的还是要趁早（哭）。<br>博主入手的时间较晚，大佬们已经开发了很多玩法同时也总结了很多经验<del>（踩坑）</del>，N1盒子基于arm架构，可刷的系统不少，比如 Arch Linux、Kail Linux、Armbian等，博主选择了大多数人推荐的armbian5.77系统。本文基于win10操作，简单介绍一下降级和刷入系统，后续可能还会写一些玩法方面的帖子总结踩坑经历。</p>
+<h5 id="简单介绍一下这个盒子："><a href="#简单介绍一下这个盒子：" class="headerlink" title="简单介绍一下这个盒子："></a>简单介绍一下这个盒子：</h5><ul>
+<li>CPU为4核的晶晨S905D，自带2G内存，超出大部分电视盒子配置（谁让这货出生是为了挖矿）</li>
+<li>自带8G的存储（<del>奇怪的</del>emmc存储），linux系统可以直接刷到盒子里，后期不用额外插U盘引导。</li>
+<li>arm64架构，可玩耍64位linux系统以及docker</li>
+<li>千兆有线网口，2.4&#x2F;5G双频wifi + 蓝牙，支持HDMI输出，没有音频输出。</li>
+<li>唯一有点遗憾的可能就是USB2.0接口了，不过还可以接受</li>
+</ul>
+<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><h5 id="1-硬件准备"><a href="#1-硬件准备" class="headerlink" title="1.硬件准备"></a>1.硬件准备</h5><ul>
+<li>N1盒子<del>（废话）</del></li>
+<li>12v2a电源（这里插一句，盒子原厂的是2a的，但是目前二手盒子大多是没有原厂电源的，可自行准备或者购买普通12v1.5a电源，1.5a的经博主测试也是完全没问题的）</li>
+<li>U盘一只（容量最好大于4G，接口方面一些大佬建议最好是USB2.0，博主用的便是USB2.0的，USB3.0的未经测试）<br>如果不需要刷安卓电视系统的话，亲测是用不到USB双公头的，可以省一点钱。</li>
+</ul>
+<h5 id="2-软件准备"><a href="#2-软件准备" class="headerlink" title="2.软件准备"></a>2.软件准备</h5><ul>
+<li>Armbian镜像：Armbian_5.77_Aml-s905_Debian_stretch_default_5.0.2_20190401.img</li>
+<li>大佬的dtb文件：meson-gxl-s905d-phicomm-n1-xiangsm.dtb</li>
+<li>W大的降级工具：斐讯T1、N1官方系统降级工具</li>
+<li>制作安装U盘工具：USB Image Tool（或其他替代品）</li>
+<li>SSH管理工具：MobaXterm（Putty、Xshell和SecureCRT也可以）</li>
+</ul>
+<h4 id="制作安装U盘"><a href="#制作安装U盘" class="headerlink" title="制作安装U盘"></a>制作安装U盘</h4><blockquote>
+<p><strong>警告：烧录有风险，该操作会格式化U盘，U盘上有重要文件可能会导致数据丢失！注意备份文件！</strong></p>
+</blockquote>
+<ol>
+<li>保证镜像是img格式，如果下载的镜像为7z或其他压缩文件，需先进行解压缩。</li>
+<li>插入U盘后打开USB Image Tool工具，点击reset恢复，此时如弹出格式化的提示就进行格式化操作（提示：部分U盘插入电脑可能会提示格式化，这时候不要点！需要通过USB Image Tool工具的reset后格式化才可以）</li>
+<li>格式化完成后，点击restore选择镜像开始烧录，等待烧录完成。</li>
+<li>烧录完成后系统会重新识别U盘，此时会提示格式化，一定要点取消！此时查看会有一个可识别的boot分区。</li>
+<li>打开boot分区中的dtb文件夹，将准备好的dtb文件粘贴进去。</li>
+<li>打开boot分区根目录的uEnv.ini 文件，修改第一行的dtb_name属性为刚放进去的dtb文件名，具体为<code>dtb_name=/dtb/meson-gxl-s905d-phicomm-n1-xiangsm.dtb</code></li>
+<li>保存退出，此时U盘已制作完成。</li>
+</ol>
+<h4 id="N1盒子降级"><a href="#N1盒子降级" class="headerlink" title="N1盒子降级"></a>N1盒子降级</h4><blockquote>
+<p><strong>友情提示：降级操作一个盒子仅需要操作一次</strong></p>
+</blockquote>
+<ol>
+<li>将盒子用HDMI连接显示器（电视也可以），接入鼠标，连接网络（有线无线都可以，建议有条件还是用有线）</li>
+<li>检测版本号，如果为2.2版本一下就不用降级了，否则便需要降级操作。（同时记录IP地址，后面会用到）</li>
+<li>鼠标左键点击四下【固件版本】，会提示打开adb（完成后可以拔掉HDMI和鼠标了）</li>
+<li>确保电脑与盒子在同一局域网下，解压W大的N1降级工具后运行onekey文件夹中的run.bat文件，输入【2】然后回车，后续根据提示操作即可。</li>
+</ol>
+<h4 id="启动U盘中的armbian系统"><a href="#启动U盘中的armbian系统" class="headerlink" title="启动U盘中的armbian系统"></a>启动U盘中的armbian系统</h4><blockquote>
+<p>网上一些教程中到此会要求连接U盘后插电开机，但经博主测试此时直接断电插电后不会进入U盘引导，依旧会进入盒子本身的系统。正确进入U盘引导方法有两个：通过W大降级工具的功能3触发以及通过adb命令触发，由于博主没准备USB双公头，故此利用adb触发，执行命令：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb connect IP地址:5555</span><br><span class="line">adb shell reboot update</span><br></pre></td></tr></table></figure>
+
+<p><strong>不要在盒子本身的系统开机的情况下插入U盘，否则U盘中的文件权限会被篡改！插入U盘之前一定先关机！</strong></p>
+<ol>
+<li>输入上述两条命令后断电，由于盒子没有电源开关，故此断电仅需拔掉电源。</li>
+<li>N1盒子的USB接口有两个，将制作好的U盘插入盒子上靠近HDMI的USB接口（有大佬指出盒子本身的两个USB接口供电有缺陷，保险起见优先使用靠近HDMI的USB接口）。</li>
+<li>插电后会进入Ｕ盘引导armbian系统，此时如果连接HDMI输出，会看到引导过程。结束标志为 <code>aml login：</code></li>
+<li>由于此时未配置无线连接，需用有线连接盒子，然后便可通过SSH连接盒子了。</li>
+</ol>
+<h4 id="将armbian系统写入emmc-分区"><a href="#将armbian系统写入emmc-分区" class="headerlink" title="将armbian系统写入emmc 分区"></a>将armbian系统写入emmc 分区</h4><p>此时进入的armbian系统为U盘引导，为了达到后期不用U盘的目的，需将armbian系统写入盒子自带的emmc分区（该操作会破坏盒子本身系统）</p>
+<ol>
+<li>SSH连接盒子需用到前面记录的盒子IP，登录用户名 root，初始密码 1234，端口默认22。</li>
+<li>首次登录会要求修改密码，依次输入原密码 1234，新密码，重复新密码。注意输入的密码为不可见状态。修改完成后还会提示建立新用户，博主为了方便就不建了，直接Ctrl + C 中断操作，用 root 用户和新密码重新登录。</li>
+<li>登陆成功会提示<code>Welcome to ARMBIAN 5.77 user-built Debian GNU/Linux 9 (stretch) 5.0.2-aml-s905</code></li>
+<li>利用<code>ls -l /</code>命令确认一下目录权限没有被篡改，都是root用户即可。</li>
+<li>写入emmc分区时，很多教程中提到的执行<code>/root/install.sh</code>，但实际上这个脚本似乎存在问题。经博主查询资料后得出结论，直接执行<code>nand-sata-install</code>便可完成写入<br>写入完成后，输入<code>poweroff</code>进行关机，然后拔掉U盘，所有刷机工作就结束了。下次插电开机会直接进入盒子的armbian系统。<blockquote>
+<p>如果想重刷armbian系统，那么还是用刚刚的U盘启动armbian，重新执行<code>nand-sata-install</code>即可完整覆盖掉emmc中的数据，不必利用ddbr或者线刷先恢复到安卓系统再重来。</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="armbian系统的简单配置"><a href="#armbian系统的简单配置" class="headerlink" title="armbian系统的简单配置"></a>armbian系统的简单配置</h4><h5 id="修改apt镜像源"><a href="#修改apt镜像源" class="headerlink" title="修改apt镜像源"></a>修改apt镜像源</h5><p>源配置文件为<code>/etc/apt/sources.list</code>，打开后将自带源用#注释掉，在下面添加国内的镜像源，添加前需确认是否提供 arm 架构的软件包，很多商业源可能并没有收录 arm 架构的软件包。<br>博主用的是清华镜像源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">deb [ arch=arm64,armhf ] https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line">#deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch main contrib non-free</span><br><span class="line">deb [ arch=arm64,armhf ] https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line">#deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-updates main contrib non-free</span><br><span class="line">deb [ arch=arm64,armhf ] https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line">#deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ stretch-backports main contrib non-free</span><br><span class="line">deb [ arch=arm64,armhf ] https://mirrors.tuna.tsinghua.edu.cn/debian-security/ stretch/updates main contrib non-free</span><br><span class="line">#deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security/ stretch/updates main contrib non-free</span><br></pre></td></tr></table></figure>
+
+<p>不更新驱动和内核的话可以直接删掉<code>/etc/apt/sources.list.d/armbian.list </code></p>
+<blockquote>
+<p>文本操作一般用vim，博主还是喜欢nano，或者WinSCP等工具也可以。修改前请确认linux 发行版，博主的armbian是基于Debian9的，如果是Ubuntu或者其他，请自行查找对应的镜像源。</p>
+</blockquote>
+<p>修改完成后运行<code>apt-get update</code>及<code>apt-get upgrade</code>更新升级软件包。</p>
+<h5 id="修改时区"><a href="#修改时区" class="headerlink" title="修改时区"></a>修改时区</h5><p>修改为东八区（UTC+8）可以用命令修改，博主这里是用的<code>armbian-config</code>配置修改。<br>执行<code>armbian-config</code>命令，选择personal，然后配置Timezone为chongqing或shanghai即可。</p>
+<h5 id="配置中文"><a href="#配置中文" class="headerlink" title="配置中文"></a>配置中文</h5><p>优先执行<code>armbian-config</code>命令，选择personal，然后检查locales是否配置了<code>en_US.utf-8</code>。如果已配置，继续修改<code>/etc/environment</code>文件，用文本打开后修改<code>LC_ALL</code>的值为<code>en_US.utf-8</code>。</p>
+<h5 id="启动BBR"><a href="#启动BBR" class="headerlink" title="启动BBR"></a>启动BBR</h5><p>BBR的鼎鼎大名不用多说，博主用的系统默认没有启动BBR，应执行如下命令来启动：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf</span><br><span class="line">echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
+
+<p>随后通过如下命令检查：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lsmod | grep bbr</span><br><span class="line"># 返回值应包含 tcp_bbr                </span><br><span class="line">sysctl net.core.default_qdisc</span><br><span class="line"># 返回值应为 net.core.default_qdisc = fq </span><br><span class="line">sysctl net.ipv4.tcp_congestion_control </span><br><span class="line"># 返回值应为 net.ipv4.tcp_congestion_control = bbr </span><br><span class="line">sysctl net.ipv4.tcp_available_congestion_control </span><br><span class="line"># 返回值应为 net.ipv4.tcp_available_congestion_control = reno cubic bbr </span><br></pre></td></tr></table></figure>
+
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p>至于写入静态MAC地址、删除默认DNS等，博主并没有操作，有需要的话可以自行查阅。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>至此N1盒子降级并刷入armbian系统便告一段落，可以作为轻量的本地linux服务器继续折腾，比如安装docker、OMV等，也可以用U盘刷个外挂emuelec当游戏机，或者刷个OP作为路由器使用。博主还安装了自动签到框架和asf用来挂卡<del>（steam乱入）</del>，大佬测试其待机功耗2w-4w左右，24小时开机也压力不大，温度维持在40多度。<br>这几天爬了不少帖子，再次感谢大佬们带来的各种教程和工具，才让我等小白也能玩上（笑）</p>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://yuerblog.cc/2019/10/23/%E6%96%90%E8%AE%AFn1-%E5%AE%8C%E7%BE%8E%E5%88%B7%E6%9C%BAarmbian%E6%95%99%E7%A8%8B/">斐讯N1 – 完美刷机Armbian教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.dragoncave.me/2019/07/armbian-on-n1.html">斐讯N1折腾记 - Armbian 5.77 刷入与优化</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/forum.php?mod=viewthread&tid=510423">Armbian-5.77 on N1, so far so good</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zrj96.com/post-1159.html">斐讯N1刷Armbian探索总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://luotianyi.vc/1306.html">斐讯N1探索手记#1 – 降级并刷入armbian系统</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">LucasL</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/04/09/4/">http://example.com/2020/04/09/4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">L's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/linux/">linux</a><a class="post-meta__tags" href="/tags/%E7%B3%BB%E7%BB%9F/">系统</a></div><div class="post_share"><div class="social-share" data-image="/config/img/avatar.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2020/04/01/3/" title="Hexo搭建博客并应用next主题小记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hexo搭建博客并应用next主题小记</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/config/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">LucasL</div><div class="author-info__description">世界以痛吻我，要我报之以歌</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my blog！网站会进行不定期更新，如果你有更好的建议可以联系我</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%E8%BF%99%E4%B8%AA%E7%9B%92%E5%AD%90%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">简单介绍一下这个盒子：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">准备</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E7%A1%AC%E4%BB%B6%E5%87%86%E5%A4%87"><span class="toc-number">2.1.</span> <span class="toc-text">1.硬件准备</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E8%BD%AF%E4%BB%B6%E5%87%86%E5%A4%87"><span class="toc-number">2.2.</span> <span class="toc-text">2.软件准备</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E5%AE%89%E8%A3%85U%E7%9B%98"><span class="toc-number">3.</span> <span class="toc-text">制作安装U盘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#N1%E7%9B%92%E5%AD%90%E9%99%8D%E7%BA%A7"><span class="toc-number">4.</span> <span class="toc-text">N1盒子降级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8U%E7%9B%98%E4%B8%AD%E7%9A%84armbian%E7%B3%BB%E7%BB%9F"><span class="toc-number">5.</span> <span class="toc-text">启动U盘中的armbian系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%86armbian%E7%B3%BB%E7%BB%9F%E5%86%99%E5%85%A5emmc-%E5%88%86%E5%8C%BA"><span class="toc-number">6.</span> <span class="toc-text">将armbian系统写入emmc 分区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#armbian%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">armbian系统的简单配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9apt%E9%95%9C%E5%83%8F%E6%BA%90"><span class="toc-number">7.1.</span> <span class="toc-text">修改apt镜像源</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%97%B6%E5%8C%BA"><span class="toc-number">7.2.</span> <span class="toc-text">修改时区</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%AD%E6%96%87"><span class="toc-number">7.3.</span> <span class="toc-text">配置中文</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8BBR"><span class="toc-number">7.4.</span> <span class="toc-text">启动BBR</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">7.5.</span> <span class="toc-text">其他</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">9.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/04/09/4/" title="N1盒子折腾记录">N1盒子折腾记录</a><time datetime="2020-04-09T00:00:00.000Z" title="发表于 2020-04-09 00:00:00">2020-04-09</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/04/01/3/" title="Hexo搭建博客并应用next主题小记">Hexo搭建博客并应用next主题小记</a><time datetime="2020-04-01T00:00:00.000Z" title="发表于 2020-04-01 00:00:00">2020-04-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/03/30/2/" title="Python3Learning">Python3Learning</a><time datetime="2020-03-30T18:25:44.000Z" title="发表于 2020-03-30 18:25:44">2020-03-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2020/03/01/1/" title="Hello World">Hello World</a><time datetime="2020-03-01T18:25:44.000Z" title="发表于 2020-03-01 18:25:44">2020-03-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By LucasL</div><div class="footer_custom_text">Hi, Welcome to my blog！</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div><!-- hexo injector body_end start --><script data-pjax>function history_calendar_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-history"><div class="card-content"><div class="item-headline"><i class="fas fa-clock fa-spin"></i><span>那年今日</span></div><div id="history-baidu" style="height: 100px;overflow: hidden"><div class="history_swiper-container" id="history-container" style="width: 100%;height: 100%"><div class="swiper-wrapper" id="history_container_wrapper" style="height:20px"></div></div></div></div>';
+                console.log('已挂载history_calendar')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            history_calendar_injector_config()
+        } </script><script data-pjax src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-card-history/baiduhistory/js/main.js"></script><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '367730b42ef84e8091e7a84c2abe33bc';
+  var gaud_map_key = 'd4ba973a3a1ea2f0ef614a357af2d083';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo" title=""><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2020/04/01/3/" alt=""><img width="48" height="48" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2020-04-01</span><a class="blog-slider__title" href="2020/04/01/3/" alt="">Hexo搭建博客并应用next主题小记</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="2020/04/01/3/" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="2020/03/30/2/" alt=""><img width="48" height="48" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2020-03-30</span><a class="blog-slider__title" href="2020/03/30/2/" alt="">Python3Learning</a><div class="blog-slider__text">再怎么看我也不知道怎么描述它的啦！</div><a class="blog-slider__button" href="2020/03/30/2/" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
